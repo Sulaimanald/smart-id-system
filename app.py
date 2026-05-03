@@ -25,13 +25,12 @@ def check_daily_limit(civil_id, product):
     today = datetime.now().strftime("%Y-%m-%d")
 
     cursor.execute(
-        "SELECT COUNT(*) FROM purchases WHERE civil_id=? AND product=? AND date=?",
+        "SELECT COUNT(*) FROM purchases WHERE civil_id=%s AND product=%s AND date=%s",
         (civil_id, product, today)
     )
 
     count = cursor.fetchone()[0]
     conn.close()
-
     return count < 1
 
 def save_purchase(civil_id, product):
@@ -40,7 +39,7 @@ def save_purchase(civil_id, product):
     today = datetime.now().strftime("%Y-%m-%d")
 
     cursor.execute(
-        "INSERT INTO purchases (civil_id, product, date) VALUES (?, ?, ?)",
+        "INSERT INTO purchases (civil_id, product, date) VALUES (%s, %s, %s)",
         (civil_id, product, today)
     )
 

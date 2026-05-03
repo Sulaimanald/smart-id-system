@@ -4,17 +4,24 @@ import psycopg2
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
+def using_postgres():
+    return DATABASE_URL is not None
+
 def connect_db():
-    if DATABASE_URL:
+    if using_postgres():
         return psycopg2.connect(DATABASE_URL)
-    else:
-        return sqlite3.connect("system.db")
+    return sqlite3.connect("system.db")
+
+def placeholder():
+    if using_postgres():
+        return "%s"
+    return "?"
 
 def create_table():
     conn = connect_db()
     cursor = conn.cursor()
 
-    if DATABASE_URL:
+    if using_postgres():
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS purchases (
             id SERIAL PRIMARY KEY,
@@ -35,3 +42,4 @@ def create_table():
 
     conn.commit()
     conn.close()
+    
