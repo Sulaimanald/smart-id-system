@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart ID Verification System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <div class="header">
+            <h1>Smart ID Verification System</h1>
+            <p>Age verification and daily purchase limit control</p>
+        </div>
+
+        <div class="card">
+            <h2>Customer Verification</h2>
+
+            <form method="POST">
+
+                <label>Civil ID Number</label>
+                <input type="text" name="civil_id" placeholder="Enter 12-digit Civil ID" required>
+
+                <label>Product Type</label>
+                <select name="product" required>
+                    <option value="nicotine">Nicotine Product</option>
+                    <option value="energy">Energy Drink</option>
+                </select>
+
+                <button type="submit">Verify Customer</button>
+
+            </form>
+
+            {% if result %}
+            <div class="result {{ status }}">
+                <h3>{{ result }}</h3>
+
+                {% if age %}
+                <p>Customer Age: {{ age }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        </div>
+
+        <div class="footer">
+            <p>Demo system for smart retail age verification</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
